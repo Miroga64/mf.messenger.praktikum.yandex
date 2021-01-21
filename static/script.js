@@ -51,7 +51,15 @@ document.addEventListener("DOMContentLoaded", function(){
         })
     }
 
- 
+    var textarea = document.querySelector('.chat__right__bottom__message');
+
+    if(textarea){
+        textarea.addEventListener('keyup', function(){
+            if(this.scrollTop > 0){
+                this.style.height = this.scrollHeight + "px";
+            }
+        });
+    }
 })
 
 function class_act(selector_name, act_name, class_name){
