@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function(){
                 let val = typeof(this.value) === "string" ? this.value : this.value.toString();
                 const form__placeholder = this.closest('.form__label').querySelector('.form__placeholder')
 
-                if(val.trim() != ''){
+                if(val.trim() !== ''){
                     form__placeholder.classList.add('active')
                 }else{
                     form__placeholder.classList.remove('active')
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
             if(pass_check.length > 0){
                
-                if(pass_check[0].value.trim() != pass_check[1].value.trim()){
+                if(pass_check[0].value.trim() !== pass_check[1].value.trim()){
                     class_act(form.querySelectorAll('.error_pass'), 'add', 'error')
                 }else{
                     class_act(form.querySelectorAll('.error_pass.error'), 'remove', 'error')
