@@ -2,12 +2,15 @@ document.addEventListener("DOMContentLoaded", function(){
     const inputs = document.querySelectorAll('.form__input')
     const submit = document.querySelector('.form__submit')
     if(inputs){
-        inputs.forEach(element=>{
+        inputs.forEach(function(element){
             element.addEventListener('blur', function(){
-                if(this.value.trim() != ''){
-                    this.closest('.form__label').querySelector('.form__placeholder').classList.add('active')
+                let val = typeof(this.value) === "string" ? this.value : this.value.toString();
+                const form__placeholder = this.closest('.form__label').querySelector('.form__placeholder')
+
+                if(val.trim() != ''){
+                    form__placeholder.classList.add('active')
                 }else{
-                    this.closest('.form__label').querySelector('.form__placeholder').classList.remove('active')
+                    form__placeholder.classList.remove('active')
                 }
             })
         })     
@@ -18,29 +21,34 @@ document.addEventListener("DOMContentLoaded", function(){
         submit.addEventListener('click', function(event){
 
             event.preventDefault();
-            let obj = {};
-            let form = this.closest('form');
+            const obj = {};
+            const form = this.closest('form');
             
             form.querySelectorAll('input:not([type="submit"])').forEach((element, index) => {
                 obj[index] = element.value.trim()
             })
     
             form.querySelectorAll('.check_empty').forEach(element => {
+                const form_label = element.closest('.form__label')
+                const form_label_error = element.closest('.form__label.error')
+
                 if(element.value.trim() == ''){
-                    if(element.closest('.form__label')){
-                        element.closest('.form__label').classList.add('error')
+                    if(form_label){
+                        form_label.classList.add('error')
                     }
                 }else{
-                    if(element.closest('.form__label.error')){
-                        element.closest('.form__label.error').classList.remove('error')
+                    if(form_label_error){
+                        form_label_error.classList.remove('error')
                     }
 
                 }
             })
-            if(form.querySelectorAll('.check_pass').length > 0){
-                let pass_check = form.querySelectorAll('.check_pass')[0].value.trim()
-                
-                if(pass_check != form.querySelectorAll('.check_pass')[1].value.trim()){
+            
+            let pass_check = form.querySelectorAll('.check_pass')
+
+            if(pass_check.length > 0){
+               
+                if(pass_check[0].value.trim() != pass_check[1].value.trim()){
                     class_act(form.querySelectorAll('.error_pass'), 'add', 'error')
                 }else{
                     class_act(form.querySelectorAll('.error_pass.error'), 'remove', 'error')
@@ -51,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function(){
         })
     }
 
-    var textarea = document.querySelector('.chat__right__bottom__message');
+    const textarea = document.querySelector('.chat__right__bottom__message');
 
     if(textarea){
         textarea.addEventListener('keyup', function(){
