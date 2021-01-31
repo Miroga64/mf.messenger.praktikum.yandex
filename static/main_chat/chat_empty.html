@@ -10,251 +10,119 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/main.css" type="text/css">
     <link rel="stylesheet" href="../styles/chat.css" type="text/css">
+    <script src="../../node_modules/handlebars/dist/handlebars.min.js" type="text/javascript"></script>
+    <script src="./script_empty.js" type="text/javascript"></script>
     <script src="../script.js" type="text/javascript"></script>
 
 </head>
 <body>
-    <main class="main">    
-        <div class="chat__left">
-            <div class="chat__left__header">
-                <a href="../profile/profile.html" class="chat__left__header__profile">Профиль</a>
-                <form class="chat__left__header__form">
-                    <label class="chat__left__header__label">
-                        <input type="text" class="chat__left__header__input" placeholder="Поиск">
-                    </label>
-                </form>
+    <main class="main" id="main">   
+        <script id="entry-template" type="text/x-handlebars-template"> 
+            <div class="chat__left">
+                <div class="chat__left__header">
+                    <a href="{{profile.link}}" class="chat__left__header__profile">{{profile.text}}</a>
+                    <form class="chat__left__header__form">
+                        <label class="chat__left__header__label">
+                            <input type="text" class="chat__left__header__input" placeholder="Поиск">
+                        </label>
+                    </form>
+                </div>
+                <ul class="chat__left__dialogs">
+                    {{#each chat_list}}
+                        <li class="chat__left__dialog">
+                            <div class="chat__left__dialog__avatar" style="background-image: url({{this.avatar}})"></div>
+                            <div class="chat__left__dialog__middle">
+                                <div class="chat__left__dialog__name">{{this.name}}</div>
+                                <div class="chat__left__dialog__text">
+                                    {{#if this.text.who}}
+                                        <span>{{this.text.who}}:</span>
+                                    {{/if}} 
+                                    {{this.text.text}}
+                                </div>
+                            </div>
+                            <div class="chat__left__dialog__right">
+                                <div class="chat__left__dialog__time">{{this.time}}</div>
+                                {{#if this.unread}}
+                                <div class="chat__left__dialog__unread">{{this.unread}}</div>
+                                {{/if}}
+                            </div>
+                            <div class="chat__left__dialog__delete"></div>
+                        </li>
+                   {{/each}}
+                </ul>
             </div>
-            <ul class="chat__left__dialogs">
-                <li class="chat__left__dialog">
-                    <div class="chat__left__dialog__avatar"></div>
-                    <div class="chat__left__dialog__middle">
-                        <div class="chat__left__dialog__name">Андрей</div>
-                        <div class="chat__left__dialog__text">
-                            <span>Вы:</span> Друзья, у меня для вас особенный выпуск новостей! Мы приготовили для вас что-то
+            <div class="chat__right">
+                {{#if chat_detail.user}}
+                    <div class="chat__right__opend">
+                        <div class="chat__right__header">
+                            <div class="chat__right__header__left">
+                                <div class="chat__right__header__avatar" style="background-image: url({{chat_detail.user.avatar}});"></div>
+                                <div class="chat__right__header__name">{{chat_detail.user.name}}</div>
+                            </div>
+                            <div class="chat__right__header__right">
+                                <button class="chat__right__header__user"></button>
+                            </div>
+                        </div>
+                        <div class="chat__right__content">
+                            {{#each chat_detail.messages_block}}
+                                <div class="chat__right__content__row data">
+                                    {{ this.data }}
+                                </div>
+                                {{#each this.messages}}
+            
+                                    <div class="chat__right__content__row">
+                                        {{#if (isIncoming this.type)}}
+                                            <div class="chat__right__content__incoming">
+                                                {{#if this.content}}
+                                                    <pre>{{this.content}}
+                                                    </pre>
+                                                    <div class="chat__right__content__time">{{this.time}}</div>
+                                                {{else}}
+                                                    <div class="chat__right__content__incoming image" style="background-image:url({{this.image}})">
+                                                        <div class="chat__right__content__time">{{this.time}}</div>
+                                                    </div>
+                                                {{/if}} 
+                                            </div>
+                                        {{else}}
+                                            <div class="chat__right__content__outcoming">
+                                                {{#if this.content}}
+                                                    <pre>{{this.content}}
+                                                    </pre>
+                                                    {{#if this.read}}
+                                                        <div class="chat__right__content__time read">{{this.time}}</div>
+                                                    {{else}}
+                                                        <div class="chat__right__content__time">{{this.time}}</div>
+                                                    {{/if}}
+                                                {{else}}
+                                                    <div class="chat__right__content__outcoming image" style="background-image:url({{this.image}})">
+                                                        {{#if this.read}}
+                                                            <div class="chat__right__content__time read">{{this.time}}</div>
+                                                        {{else}}
+                                                            <div class="chat__right__content__time">{{this.time}}</div>
+                                                        {{/if}}
+                                                    </div>
+                                                {{/if}}
+                                            </div>
+                                        {{/if}}
+                                    </div>
+                                {{/each}}
+                            {{/each}}
+                        </div>
+                        <div class="chat__right__bottom">
+                            <div class="chat__right__bottom__add">
+                                <button class="chat__right__bottom__btn"></button>
+                            </div>
+                            <textarea name="message" class="chat__right__bottom__message"></textarea>
+                            <button class="chat__right__bottom__send"></button>
                         </div>
                     </div>
-                    <div class="chat__left__dialog__right">
-                        <div class="chat__left__dialog__time">10:49</div>
-                        <div class="chat__left__dialog__unread">2</div>
+                {{else}}
+                    <div class="chat__right__empty">
+                        <span>Выберите чат чтобы отправить сообщение</span>
                     </div>
-                    <div class="chat__left__dialog__delete"></div>
-                </li>
-                <li class="chat__left__dialog">
-                    <div class="chat__left__dialog__avatar"></div>
-                    <div class="chat__left__dialog__middle">
-                        <div class="chat__left__dialog__name">Андрей</div>
-                        <div class="chat__left__dialog__text">
-                            Мы приготовили для вас что-то!
-                        </div>
-                    </div>
-                    <div class="chat__left__dialog__right">
-                        <div class="chat__left__dialog__time">1 апреля 21:00</div>
-                        <div class="chat__left__dialog__unread">2</div>
-                    </div>
-                    <div class="chat__left__dialog__delete"></div>
-                </li>
-                <li class="chat__left__dialog">
-                    <div class="chat__left__dialog__avatar"></div>
-                    <div class="chat__left__dialog__middle">
-                        <div class="chat__left__dialog__name">Андрей</div>
-                        <div class="chat__left__dialog__text">
-                            Друзья, у меня для вас особенный выпуск новостей! Мы приготовили для вас что-то
-                        </div>
-                    </div>
-                    <div class="chat__left__dialog__right">
-                        <div class="chat__left__dialog__time">10:49</div>
-                    </div>
-                    <div class="chat__left__dialog__delete"></div>
-                </li>
-                <li class="chat__left__dialog">
-                    <div class="chat__left__dialog__avatar"></div>
-                    <div class="chat__left__dialog__middle">
-                        <div class="chat__left__dialog__name">Андрей</div>
-                        <div class="chat__left__dialog__text">
-                            Друзья, у меня для вас особенный выпуск новостей! Мы приготовили для вас что-то
-                        </div>
-                    </div>
-                    <div class="chat__left__dialog__right">
-                        <div class="chat__left__dialog__time">10:49</div>
-                        <div class="chat__left__dialog__unread">2</div>
-                    </div>
-                    <div class="chat__left__dialog__delete"></div>
-                </li>
-                <li class="chat__left__dialog">
-                    <div class="chat__left__dialog__avatar"></div>
-                    <div class="chat__left__dialog__middle">
-                        <div class="chat__left__dialog__name">Андрей</div>
-                        <div class="chat__left__dialog__text">
-                            Друзья, у меня для вас особенный выпуск новостей! Мы приготовили для вас что-то
-                        </div>
-                    </div>
-                    <div class="chat__left__dialog__right">
-                        <div class="chat__left__dialog__time">10:49</div>
-                        <div class="chat__left__dialog__unread">2</div>
-                    </div>
-                    <div class="chat__left__dialog__delete"></div>
-                </li>
-                <li class="chat__left__dialog">
-                    <div class="chat__left__dialog__avatar"></div>
-                    <div class="chat__left__dialog__middle">
-                        <div class="chat__left__dialog__name">Андрей</div>
-                        <div class="chat__left__dialog__text">
-                            Друзья, у меня для вас особенный выпуск новостей! Мы приготовили для вас что-то
-                        </div>
-                    </div>
-                    <div class="chat__left__dialog__right">
-                        <div class="chat__left__dialog__time">10:49</div>
-                        <div class="chat__left__dialog__unread">2</div>
-                    </div>
-                    <div class="chat__left__dialog__delete"></div>
-                </li>
-                <li class="chat__left__dialog">
-                    <div class="chat__left__dialog__avatar"></div>
-                    <div class="chat__left__dialog__middle">
-                        <div class="chat__left__dialog__name">Андрей</div>
-                        <div class="chat__left__dialog__text">
-                            Друзья, у меня для вас особенный выпуск новостей! Мы приготовили для вас что-то
-                        </div>
-                    </div>
-                    <div class="chat__left__dialog__right">
-                        <div class="chat__left__dialog__time">10:49</div>
-                        <div class="chat__left__dialog__unread">2</div>
-                    </div>
-                    <div class="chat__left__dialog__delete"></div>
-                </li>
-                <li class="chat__left__dialog">
-                    <div class="chat__left__dialog__avatar"></div>
-                    <div class="chat__left__dialog__middle">
-                        <div class="chat__left__dialog__name">Андрей</div>
-                        <div class="chat__left__dialog__text">
-                            Друзья, у меня для вас особенный выпуск новостей! Мы приготовили для вас что-то
-                        </div>
-                    </div>
-                    <div class="chat__left__dialog__right">
-                        <div class="chat__left__dialog__time">10:49</div>
-                        <div class="chat__left__dialog__unread">2</div>
-                    </div>
-                    <div class="chat__left__dialog__delete"></div>
-                </li>
-                <li class="chat__left__dialog">
-                    <div class="chat__left__dialog__avatar"></div>
-                    <div class="chat__left__dialog__middle">
-                        <div class="chat__left__dialog__name">Андрей</div>
-                        <div class="chat__left__dialog__text">
-                            Друзья, у меня для вас особенный выпуск новостей! Мы приготовили для вас что-то
-                        </div>
-                    </div>
-                    <div class="chat__left__dialog__right">
-                        <div class="chat__left__dialog__time">10:49</div>
-                        <div class="chat__left__dialog__unread">2</div>
-                    </div>
-                    <div class="chat__left__dialog__delete"></div>
-                </li>
-                <li class="chat__left__dialog">
-                    <div class="chat__left__dialog__avatar"></div>
-                    <div class="chat__left__dialog__middle">
-                        <div class="chat__left__dialog__name">Андрей</div>
-                        <div class="chat__left__dialog__text">
-                            Друзья, у меня для вас особенный выпуск новостей! Мы приготовили для вас что-то
-                        </div>
-                    </div>
-                    <div class="chat__left__dialog__right">
-                        <div class="chat__left__dialog__time">10:49</div>
-                        <div class="chat__left__dialog__unread">2</div>
-                    </div>
-                    <div class="chat__left__dialog__delete"></div>
-                </li>
-                <li class="chat__left__dialog">
-                    <div class="chat__left__dialog__avatar"></div>
-                    <div class="chat__left__dialog__middle">
-                        <div class="chat__left__dialog__name">Андрей</div>
-                        <div class="chat__left__dialog__text">
-                            Друзья, у меня для вас особенный выпуск новостей! Мы приготовили для вас что-то
-                        </div>
-                    </div>
-                    <div class="chat__left__dialog__right">
-                        <div class="chat__left__dialog__time">10:49</div>
-                        <div class="chat__left__dialog__unread">2</div>
-                    </div>
-                    <div class="chat__left__dialog__delete"></div>
-                </li>
-                <li class="chat__left__dialog">
-                    <div class="chat__left__dialog__avatar"></div>
-                    <div class="chat__left__dialog__middle">
-                        <div class="chat__left__dialog__name">Андрей</div>
-                        <div class="chat__left__dialog__text">
-                            Друзья, у меня для вас особенный выпуск новостей! Мы приготовили для вас что-то
-                        </div>
-                    </div>
-                    <div class="chat__left__dialog__right">
-                        <div class="chat__left__dialog__time">10:49</div>
-                        <div class="chat__left__dialog__unread">2</div>
-                    </div>
-                    <div class="chat__left__dialog__delete"></div>
-                </li>
-                <li class="chat__left__dialog">
-                    <div class="chat__left__dialog__avatar"></div>
-                    <div class="chat__left__dialog__middle">
-                        <div class="chat__left__dialog__name">Андрей</div>
-                        <div class="chat__left__dialog__text">
-                            Друзья, у меня для вас особенный выпуск новостей! Мы приготовили для вас что-то
-                        </div>
-                    </div>
-                    <div class="chat__left__dialog__right">
-                        <div class="chat__left__dialog__time">10:49</div>
-                        <div class="chat__left__dialog__unread">2</div>
-                    </div>
-                    <div class="chat__left__dialog__delete"></div>
-                </li>
-                <li class="chat__left__dialog">
-                    <div class="chat__left__dialog__avatar"></div>
-                    <div class="chat__left__dialog__middle">
-                        <div class="chat__left__dialog__name">Андрей</div>
-                        <div class="chat__left__dialog__text">
-                            Друзья, у меня для вас особенный выпуск новостей! Мы приготовили для вас что-то
-                        </div>
-                    </div>
-                    <div class="chat__left__dialog__right">
-                        <div class="chat__left__dialog__time">10:49</div>
-                        <div class="chat__left__dialog__unread">2</div>
-                    </div>
-                    <div class="chat__left__dialog__delete"></div>
-                </li>
-                <li class="chat__left__dialog">
-                    <div class="chat__left__dialog__avatar"></div>
-                    <div class="chat__left__dialog__middle">
-                        <div class="chat__left__dialog__name">Андрей</div>
-                        <div class="chat__left__dialog__text">
-                            Друзья, у меня для вас особенный выпуск новостей! Мы приготовили для вас что-то
-                        </div>
-                    </div>
-                    <div class="chat__left__dialog__right">
-                        <div class="chat__left__dialog__time">10:49</div>
-                        <div class="chat__left__dialog__unread">2</div>
-                    </div>
-                    <div class="chat__left__dialog__delete"></div>
-                </li>
-                <li class="chat__left__dialog">
-                    <div class="chat__left__dialog__avatar"></div>
-                    <div class="chat__left__dialog__middle">
-                        <div class="chat__left__dialog__name">Андрей</div>
-                        <div class="chat__left__dialog__text">
-                            Друзья, у меня для вас особенный выпуск новостей! Мы приготовили для вас что-то
-                        </div>
-                    </div>
-                    <div class="chat__left__dialog__right">
-                        <div class="chat__left__dialog__time">10:49</div>
-                        <div class="chat__left__dialog__unread">2</div>
-                    </div>
-                    <div class="chat__left__dialog__delete"></div>
-                </li>
-            </ul>
-        </div>
-        <div class="chat__right">
-            <div class="chat__right__empty">
-                <span>Выберите чат чтобы отправить сообщение</span>
+                {{/if}}
             </div>
-        </div>
+        </script>
     </main>
 </body>
 </html>

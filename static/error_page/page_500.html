@@ -10,15 +10,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/main.css" type="text/css">
     <link rel="stylesheet" href="../styles/empty_page.css" type="text/css">
-    <script src="../script.js" type="text/javascript"></script>
+    <script src="../../node_modules/handlebars/dist/handlebars.min.js" type="text/javascript"></script>
+    <script src="./script.js" type="text/javascript"></script>
+
 
 </head>
 <body>
-    <main class="main"> 
-        <div class="empty_page">
-            <div class="empty_page__title">500</div>
-            <div class="empty_page__text">Мы уже фиксим</div>
-            <a href="../main_chat/chat_with_controls.html" class="empty_page__link">Назад к чатам</a>
-        </div>
+    <main class="main" id="main"> 
+        <script id="entry-template" type="text/x-handlebars-template">
+            <div class="empty_page">
+                <div class="empty_page__title">{{ page_500.error }}</div>
+                <div class="empty_page__text">{{ page_500.text }}</div>
+                <a href="{{ page_500.link }}" class="empty_page__link">{{ page_500.link_text }}</a>
+            </div> 
+        </script>
     </main>
 </body>

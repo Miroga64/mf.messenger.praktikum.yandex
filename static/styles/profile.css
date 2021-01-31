@@ -48,6 +48,9 @@
     height: 130px;
     border-radius: 50%;
     margin-left: auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     margin-right: auto;
 }
 .profile__content__avatar.editable:hover .profile__content__avatar__edit{
@@ -99,7 +102,25 @@
     padding-bottom: 10px;
 }
 
+.profile__content__row.form__label{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+}
+.profile__content__row.form__label .form__error{
+    left: auto;
+    right: 0;
+}
+.profile__content__row.form__label.error{
+    margin-bottom: 20px;
+}
+
 .profile__content__row:not(:last-child){
+    border-bottom: 1px solid #EAEAEA;
+    margin-bottom: 10px;
+}
+.profile__content__row.form__label:not(:last-child){
     border-bottom: 1px solid #EAEAEA;
     margin-bottom: 10px;
 }

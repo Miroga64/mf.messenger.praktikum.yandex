@@ -400,6 +400,23 @@
     margin-left: auto;
     max-width: 402px;
 }
+.chat__right__content__outcoming.image{
+    width: 316px;
+    height: 211px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    border-radius: 14px;
+    border: 1px solid #F8F8F8;
+    background-color: transparent;
+    margin-left: auto;
+}
+.chat__right__content__outcoming.image .chat__right__content__time{
+    position: absolute;
+    bottom: 11px;
+    right: 11px;
+}
 .chat__right__content__outcoming pre{
     font-style: normal;
     font-weight: 500;
@@ -521,6 +538,7 @@
     border-radius: 12px;
     position: absolute;
     right: 20px;
+    z-index: 20;
     top: calc(100% + 16px);
 }
 
@@ -558,6 +576,8 @@
 .chat__right__bottom__type{
     position: absolute;
     padding: 15px;
+    background-color: white;
+    z-index: 20;
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
     border-radius: 12px;
     left: 20px;

@@ -10,30 +10,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/main.css" type="text/css">
     <link rel="stylesheet" href="../styles/form.css" type="text/css">
+    <script src="../../node_modules/handlebars/dist/handlebars.min.js" type="text/javascript"></script>
+    <script src="./reg.js" type="module"></script>
     <script src="../script.js" type="text/javascript"></script>
 
 </head>
 <body>
-    <main class="main">
-        <form class="form">
-            <div class="form__top">
-                <div class="form__title">Вход</div>
-                <label class="form__label">
-                    <input name="login" type="text" class="form__input check_empty">
-                    <div class="form__placeholder">Логин</div>
-                    <div class="form__error">Неверный логин</div>
-                </label>
-                <label class="form__label">
-                    <input name="password" type="password" class="form__input check_empty">
-                    <div class="form__placeholder">Пароль</div>
-                    <div class="form__error">Неверный пароль</div>
-                </label>
-            </div>
-            <div class="form__bottom">
-                <input type="submit" value="Авторизоваться" class="form__submit">
-                <a class="form__link" href="./reg.html">Нет аккаунта?</a>
-            </div>
-        </form>
+    <main class="main" id="main">
+        <script id="entry-template" type="text/x-handlebars-template">
+            <form class="form">
+                <div class="form__top">
+                    <div class="form__title">{{user_in.form_title}}</div>
+                    <label class="form__label">
+                        <input name="login" type="text" class="form__input check_empty">
+                        <div class="form__placeholder">{{user_in.login.name}}</div>
+                        <div class="form__error">{{user_in.login.error}}</div>
+                    </label>
+                    <label class="form__label error_pass">
+                        <input type="password" class="form__input check_empty">
+                        <div class="form__placeholder">{{user_in.password.name}}</div>
+                        <div class="form__error">{{user_in.password.error}}</div>
+                    </label>
+                </div>
+                <div class="form__bottom">
+                    <div class="form__bottom__container"></div>
+                    <a class="form__link" href="./index.html">Войти</a>
+                </div>
+            </form>
+        </script>
     </main>
 </body>
 </html>
