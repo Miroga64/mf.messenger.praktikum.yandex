@@ -1,4 +1,4 @@
-import Block from '../block/block.js';
+import Block from './block.js';
 export class Button extends Block {
     constructor(props) {
         // Создаём враппер дом-элемент button
