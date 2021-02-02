@@ -12,43 +12,43 @@ document.addEventListener("DOMContentLoaded", function () {
     let context = {
         link_array:[
             {
-                link: './static/registration_and_sign_in/index.html',
+                link: './static/pages/index.html',
                 name: 'Вход',
             },
             {
-                link: './static/registration_and_sign_in/reg.html',
+                link: './static/pages/reg.html',
                 name: 'Регистрация',
             },
             {
-                link: './static/profile/profile.html',
+                link: './static/pages/profile.html',
                 name: 'Профиль',
             },
             {
-                link: './static/profile/profile_edit.html',
+                link: './static/pages/profile_edit.html',
                 name: 'Изменить данные в профиле',
             },
             {
-                link: './static/profile/edit_pass.html',
+                link: './static/pages/edit_pass.html',
                 name: 'Изменить пароль',
             },
             {
-                link: './static/main_chat/chat_empty.html',
+                link: './static/pages/chat_empty.html',
                 name: 'Чат без детаального диалога',
             },
             {
-                link: './static/main_chat/chat_with_dialog.html',
+                link: './static/pages/chat_with_dialog.html',
                 name: 'Чат c детальным диалогом',
             },
             {
-                link: './static/main_chat/chat_with_controls.html',
+                link: './static/pages/chat_with_controls.html',
                 name: 'Чат c элементами управления',
             },
             {
-                link: './static/error_page/page_404.html',
+                link: './static/pages/page_404.html',
                 name: 'Ошибка 404',
             },
             {
-                link: './static/error_page/page_500.html',
+                link: './static/pages/page_500.html',
                 name: 'Ошибка 500',
             },
         ]
