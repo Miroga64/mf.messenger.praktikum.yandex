@@ -8,7 +8,7 @@ export class Button extends Block {
         return `<input type="submit" value="${this.props.value}" class="${this.props.class}">`;
     }
 }
-export function render(query, block) {
+export function render_btn(query, block) {
     const root = document.querySelector(query);
     root.appendChild(block.getContent());
     return root;
