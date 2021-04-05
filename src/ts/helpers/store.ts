@@ -3,7 +3,7 @@ Handlebars.registerHelper('isIncoming', function (value) {
 });
 
 import set from './set.js'
-import {updateRoute} from './router.js'
+import {updateRoute} from '../route/router.js'
 
 export let store: any = {
     sign:{
@@ -134,7 +134,7 @@ export let store: any = {
             profile_edit: {
                 profile_back: 'chat.html',
                 avatar_edit_content: 'Поменять аватар',
-                avatar: '/static/images/avatar.jpg',
+                avatar: '/build/images/avatar.jpg',
                 email: 'pochta@yandex.ru',
                 login: 'ivanivanov',
                 first_name: 'Иван',
@@ -206,7 +206,7 @@ export let store: any = {
             profile_edit: {
                 profile_back: 'profile.html',
                 avatar_edit_content: 'Поменять аватар',
-                avatar: '/static/images/avatar.jpg',
+                avatar: '/build/images/avatar.jpg',
                 email: 'pochta@yandex.ru',
                 login: 'ivanivanov',
                 first_name: 'Иван',
@@ -322,7 +322,7 @@ export let store: any = {
 
             chat_list: [
                 {
-                    avatar: '/static/images/avatar.jpg',
+                    avatar: '/build/images/avatar.jpg',
                     name: ['Михаил', 'Слава'],
                     text: {
                         who: '',
@@ -332,7 +332,7 @@ export let store: any = {
                     unread: 2,
                 },
                 {
-                    avatar: '/static/images/avatar.jpg',
+                    avatar: '/build/images/avatar.jpg',
                     name: 'Вася',
                     text: {
                         who: 'Вы',
@@ -342,7 +342,7 @@ export let store: any = {
                     unread: 2,
                 },
                 {
-                    avatar: '/static/images/avatar.jpg',
+                    avatar: '/build/images/avatar.jpg',
                     name: 'Вася',
                     text: {
                         who: 'Вы',
@@ -352,7 +352,7 @@ export let store: any = {
                     unread: 0,
                 },
                 {
-                    avatar: '/static/images/avatar.jpg',
+                    avatar: '/build/images/avatar.jpg',
                     name: 'Михаил',
                     text: {
                         who: 'Вы',
@@ -362,7 +362,7 @@ export let store: any = {
                     unread: 2,
                 },
                 {
-                    avatar: '/static/images/avatar.jpg',
+                    avatar: '/build/images/avatar.jpg',
                     name: 'Вася',
                     text: {
                         who: 'Вы',
@@ -372,7 +372,7 @@ export let store: any = {
                     unread: 2,
                 },
                 {
-                    avatar: '/static/images/avatar.jpg',
+                    avatar: '/build/images/avatar.jpg',
                     name: 'Вася',
                     text: {
                         who: 'Вы',
@@ -382,7 +382,7 @@ export let store: any = {
                     unread: 0,
                 },
                 {
-                    avatar: '/static/images/avatar.jpg',
+                    avatar: '/build/images/avatar.jpg',
                     name: 'Михаил',
                     text: {
                         who: 'Вы',
@@ -392,7 +392,7 @@ export let store: any = {
                     unread: 2,
                 },
                 {
-                    avatar: '/static/images/avatar.jpg',
+                    avatar: '/build/images/avatar.jpg',
                     name: 'Вася',
                     text: {
                         who: 'Вы',
@@ -402,7 +402,7 @@ export let store: any = {
                     unread: 2,
                 },
                 {
-                    avatar: '/static/images/avatar.jpg',
+                    avatar: '/build/images/avatar.jpg',
                     name: 'Вася',
                     text: {
                         who: 'Вы',
@@ -412,7 +412,7 @@ export let store: any = {
                     unread: 0,
                 },
                 {
-                    avatar: '/static/images/avatar.jpg',
+                    avatar: '/build/images/avatar.jpg',
                     name: 'Михаил',
                     text: {
                         who: 'Вы',
@@ -422,7 +422,7 @@ export let store: any = {
                     unread: 2,
                 },
                 {
-                    avatar: '/static/images/avatar.jpg',
+                    avatar: '/build/images/avatar.jpg',
                     name: 'Вася',
                     text: {
                         who: 'Вы',
@@ -432,7 +432,7 @@ export let store: any = {
                     unread: 2,
                 },
                 {
-                    avatar: '/static/images/avatar.jpg',
+                    avatar: '/build/images/avatar.jpg',
                     name: 'Вася',
                     text: {
                         who: 'Вы',
@@ -446,7 +446,7 @@ export let store: any = {
             // chat_detail: {
             //     user: {
             //         name: 'Вадим',
-            //         avatar: '/static/images/avatar.jpg'
+            //         avatar: '/build/images/avatar.jpg'
             //     },
             //     messages_block: [
             //         {
@@ -462,7 +462,7 @@ export let store: any = {
             //                 },
             //                 {
             //                     type: 'incoming',
-            //                     image: '/static/images/dialog_image.png',
+            //                     image: '/build/images/dialog_image.png',
             //                     time: '12:02'
             //                 },
             //                 {
@@ -473,7 +473,7 @@ export let store: any = {
             //                 },
             //                 {
             //                     type: 'outcoming',
-            //                     image: `/static/images/dialog_image.png`,
+            //                     image: `/build/images/dialog_image.png`,
             //                     time: '12:04',
             //                     read: false,
             //                 },
@@ -492,7 +492,7 @@ export let store: any = {
             //                 },
             //                 {
             //                     type: 'incoming',
-            //                     image: '/static/images/dialog_image.png',
+            //                     image: '/build/images/dialog_image.png',
             //                     time: '12:02'
             //                 },
             //                 {
@@ -503,7 +503,7 @@ export let store: any = {
             //                 },
             //                 {
             //                     type: 'outcoming',
-            //                     image: `/static/images/dialog_image.png`,
+            //                     image: `/build/images/dialog_image.png`,
             //                     time: '12:04',
             //                     read: false,
             //                 },
@@ -621,15 +621,15 @@ export let store: any = {
                         <div class="chat__right__bottom">
                             <div class="chat__right__bottom__type disabled">
                                 <button class="chat__right__bottom__row">
-                                    <div class="chat__right__bottom__icon" style="background-image: url(/static/images/type_photo.svg)"></div>
+                                    <div class="chat__right__bottom__icon" style="background-image: url(/build/images/type_photo.svg)"></div>
                                     <span>Фото или Видео</span>
                                 </button>
                                 <button class="chat__right__bottom__row">
-                                    <div class="chat__right__bottom__icon" style="background-image: url(/static/images/type_file.svg)"></div>
+                                    <div class="chat__right__bottom__icon" style="background-image: url(/build/images/type_file.svg)"></div>
                                     <span>Файл</span>
                                 </button>
                                 <button class="chat__right__bottom__row">
-                                    <div class="chat__right__bottom__icon" style="background-image: url(/static/images/type_location.svg)"></div>
+                                    <div class="chat__right__bottom__icon" style="background-image: url(/build/images/type_location.svg)"></div>
                                     <span>Локация</span>
                                 </button>
                             </div>

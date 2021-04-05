@@ -1,6 +1,6 @@
-import { goto } from "./router.js"
-import { store, update } from './store.js'
-import { start_update, update_data, update_pass, system_out, create_chat, delete_chat, add_personal_avatar, detail_chat, add_user_to_chat, delete_users_from_chat} from "./api.js"
+import { goto } from "./route/router.js"
+import { store, update } from './helpers/store.js'
+import { start_update, update_data, update_pass, system_out, create_chat, delete_chat, add_personal_avatar, detail_chat, add_user_to_chat, delete_users_from_chat} from "./helpers/api.js"
 export default function scripts(){
 
     setTimeout(() => {
@@ -152,14 +152,14 @@ export default function scripts(){
                     if(flag && this.closest('form.auth')){
                         start_update('auth', obj)
                         .then( data => {
-                            goto('/static/route/chat.html')
+                            goto('/build/route/chat.html')
                         })
                     }
     
                     if(flag && this.closest('form.sign')){
                         start_update('sign', obj)
                         .then( data => {
-                            goto('/static/route/chat.html')
+                            goto('/build/route/chat.html')
                         })
                     }
     
@@ -168,12 +168,12 @@ export default function scripts(){
                             alert(error);
                         })
                         .then( (response: any) => {
-                            return update('profile.context.profile_edit', JSON.parse(response.response), '/static/route/profile.html', 'profile')
+                            return update('profile.context.profile_edit', JSON.parse(response.response), '/build/route/profile.html', 'profile')
                         }).then(response => {
-                            return update('profile_edit.context.profile_edit', response, '/static/route/profile_edit.html', 'profile_edit')
+                            return update('profile_edit.context.profile_edit', response, '/build/route/profile_edit.html', 'profile_edit')
                         }).then(response => {
                             alert('Данные успешно изменены')
-                            goto('/static/route/profile.html')
+                            goto('/build/route/profile.html')
                         })
                     }
     
@@ -184,7 +184,7 @@ export default function scripts(){
                         .then(response => {
                             localStorage.setItem('password', obj.newPassword)
                             alert('Пароль успешно изменен')
-                            goto('/static/route/profile.html')
+                            goto('/build/route/profile.html')
                         })
                     }
     
@@ -195,7 +195,7 @@ export default function scripts(){
                                 obj.file = doc.files[0]
                                 console.log(obj)
                                 create_chat(obj).then( response => {
-                                    goto('/static/route/chat.html')
+                                    goto('/build/route/chat.html')
                                 })
                             }
                         }
@@ -208,7 +208,7 @@ export default function scripts(){
                             if(doc.files){
                                 obj.file = doc.files[0]
                                 add_personal_avatar(obj).then( response => {
-                                    goto('/static/route/profile.html')
+                                    goto('/build/route/profile.html')
                                 })
                             }
                         }
@@ -223,11 +223,11 @@ export default function scripts(){
                         .then((response: any) => {
                             console.log(response)
                             let users =  JSON.parse(response.response)
-                            return update('chat.context.chat_detail.user.name', users.map(element => element.display_name), '/static/route/chat.html', 'chat')
+                            return update('chat.context.chat_detail.user.name', users.map(element => element.display_name), '/build/route/chat.html', 'chat')
                         })
                         .then( resp => {
                             console.log(store.chat.context.chat_detail.user)
-                            goto('/static/route/chat.html')
+                            goto('/build/route/chat.html')
                         })
                     }
 
@@ -240,11 +240,11 @@ export default function scripts(){
                         .then((response: any) => {
                             console.log(response)
                             let users =  JSON.parse(response.response)
-                            return update('chat.context.chat_detail.user.name', users.map(element => element.display_name), '/static/route/chat.html', 'chat')
+                            return update('chat.context.chat_detail.user.name', users.map(element => element.display_name), '/build/route/chat.html', 'chat')
                         })
                         .then( resp => {
                             console.log(store.chat.context.chat_detail.user)
-                            goto('/static/route/chat.html')
+                            goto('/build/route/chat.html')
                         })
                     }
                 });
@@ -256,7 +256,7 @@ export default function scripts(){
             links.forEach(function(this: any, element){
                 element.addEventListener('click', function(e){ 
                     e.preventDefault()
-                    goto(`/static/route/${element.getAttribute('href')}`)
+                    goto(`/build/route/${element.getAttribute('href')}`)
                 })
             })
         }
@@ -314,7 +314,7 @@ export default function scripts(){
                     let attr = parseInt(this.closest('.chat__left__dialog').getAttribute('data-id'))
                     console.log(attr)
                     delete_chat({'chatId': attr}).then(response => {
-                        goto('/static/route/chat.html')
+                        goto('/build/route/chat.html')
                     })
                 })
             })
@@ -326,17 +326,17 @@ export default function scripts(){
                     detail_chat({'id': parseInt(this.getAttribute('data-id'))})
                     .then((response: any) => {
                         let users =  JSON.parse(response.response)
-                        return update('chat.context.chat_detail.user.name', users.map(element => element.display_name), '/static/route/chat.html', 'chat')
+                        return update('chat.context.chat_detail.user.name', users.map(element => element.display_name), '/build/route/chat.html', 'chat')
                     })
                     .then( response => {
                         let avatar = this.querySelector('.chat__left__dialog__avatar').style.backgroundImage;
-                        update('chat.context.chat_detail.user.avatar', avatar, '/static/route/chat.html', 'chat')
+                        update('chat.context.chat_detail.user.avatar', avatar, '/build/route/chat.html', 'chat')
                     }).then( resp => {
                         let id = this.getAttribute('data-id');
-                        update('chat.context.chat_detail.user.id', id, '/static/route/chat.html', 'chat')
+                        update('chat.context.chat_detail.user.id', id, '/build/route/chat.html', 'chat')
                     })
                     .then( response => {
-                        goto('/static/route/chat.html')
+                        goto('/build/route/chat.html')
                     })
                 })
             })
