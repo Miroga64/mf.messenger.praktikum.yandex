@@ -12,8 +12,7 @@
   "devDependencies": {},
   "scripts": {
     "start": "node server.js",
-    "build": "./deploy.sh"
-    
+    "build": "sass ./src/scss/chat.scss ./build/styles/chat.css"
   },
   "repository": {
     "type": "git",
