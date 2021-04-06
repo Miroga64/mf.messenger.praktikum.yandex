@@ -7,4 +7,4 @@
 
 [build]
   publish = "/" 
-  comand = "./deploy.sh"
+  comand = "npm run build"

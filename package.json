@@ -12,7 +12,8 @@
   "devDependencies": {},
   "scripts": {
     "start": "node server.js",
-    "build": "tsc -p ./"
+    "build": "./deploy.sh"
+    
   },
   "repository": {
     "type": "git",

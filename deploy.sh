@@ -2,7 +2,7 @@
 
 set -e
 rm -rf ./build
-npm run build
+tsc -p ./
 
 cd ./build
 mkdir styles
