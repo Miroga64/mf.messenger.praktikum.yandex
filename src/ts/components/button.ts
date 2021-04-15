@@ -1,4 +1,4 @@
-import Block from './block.js'
+import Block from './block.ts'
 
 export class Button extends Block {
     constructor(props) {

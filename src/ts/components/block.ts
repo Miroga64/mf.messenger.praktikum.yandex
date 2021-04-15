@@ -1,4 +1,4 @@
-import EventBus from "../helpers/event-bus.js"
+import EventBus from "../helpers/event-bus.ts"
 class Block {
     static EVENTS = {
       INIT: "init",

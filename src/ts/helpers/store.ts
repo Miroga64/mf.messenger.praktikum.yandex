@@ -2,8 +2,10 @@ Handlebars.registerHelper('isIncoming', function (value) {
     return value == 'incoming' ? true : false;
 });
 
-import set from './set.js'
-import {updateRoute} from '../route/router.js'
+import set from './set.ts'
+import push from './push.ts'
+
+import {updateRoute} from '../route/router.ts'
 
 export let store: any = {
     sign:{
@@ -443,74 +445,39 @@ export let store: any = {
                 },
             ],
 
-            // chat_detail: {
-            //     user: {
-            //         name: 'Вадим',
-            //         avatar: '/build/images/avatar.jpg'
-            //     },
-            //     messages_block: [
-            //         {
-            //             data: '19 июня',
-            //             messages: [
-            //                 {
-            //                     type: 'incoming',
-            //                     content: `Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой.
+            chat_detail: {
+                messages_block: [
+                    {
+                        messages: [
+                            // {
+                            //     type: 'incoming',
+                            //     content: `Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой.
             
-            //                     Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.
-            //                     `,
-            //                     time: '11:56'
-            //                 },
-            //                 {
-            //                     type: 'incoming',
-            //                     image: '/build/images/dialog_image.png',
-            //                     time: '12:02'
-            //                 },
-            //                 {
-            //                     type: 'outcoming',
-            //                     content: `Круто! Круто! Круто! Круто! Круто! Круто! Круто! Круто! Круто! Круто! Круто! Круто! `,
-            //                     time: '12:04',
-            //                     read: true,
-            //                 },
-            //                 {
-            //                     type: 'outcoming',
-            //                     image: `/build/images/dialog_image.png`,
-            //                     time: '12:04',
-            //                     read: false,
-            //                 },
-            //             ]
-            //         },
-            //         {
-            //             data: '19 июня',
-            //             messages: [
-            //                 {
-            //                     type: 'incoming',
-            //                     content: `Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой.
-            
-            //                     Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.
-            //                     `,
-            //                     time: '11:56'
-            //                 },
-            //                 {
-            //                     type: 'incoming',
-            //                     image: '/build/images/dialog_image.png',
-            //                     time: '12:02'
-            //                 },
-            //                 {
-            //                     type: 'outcoming',
-            //                     content: `Круто! Круто! Круто! Круто! Круто! Круто! Круто! Круто! Круто! Круто! Круто! Круто! `,
-            //                     time: '12:04',
-            //                     read: true,
-            //                 },
-            //                 {
-            //                     type: 'outcoming',
-            //                     image: `/build/images/dialog_image.png`,
-            //                     time: '12:04',
-            //                     read: false,
-            //                 },
-            //             ]
-            //         },
-            //     ]
-            // }
+                            //     Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.
+                            //     `,
+                            //     time: '11:56'
+                            // },
+                            // {
+                            //     type: 'incoming',
+                            //     image: '/build/images/dialog_image.png',
+                            //     time: '12:02'
+                            // },
+                            // {
+                            //     type: 'outcoming',
+                            //     content: `Круто! Круто! Круто! Круто! Круто! Круто! Круто! Круто! Круто! Круто! Круто! Круто! `,
+                            //     time: '12:04',
+                            //     read: true,
+                            // },
+                            // {
+                            //     type: 'outcoming',
+                            //     image: `/build/images/dialog_image.png`,
+                            //     time: '12:04',
+                            //     read: false,
+                            // },
+                        ]
+                    },
+                ]
+            }
         },
 
         sources:`
@@ -618,7 +585,7 @@ export let store: any = {
                                 {{/each}}
                             {{/each}}
                         </div>
-                        <div class="chat__right__bottom">
+                        <form class="chat__right__bottom">
                             <div class="chat__right__bottom__type disabled">
                                 <button class="chat__right__bottom__row">
                                     <div class="chat__right__bottom__icon" style="background-image: url(/build/images/type_photo.svg)"></div>
@@ -636,9 +603,9 @@ export let store: any = {
                             <div class="chat__right__bottom__add">
                                 <button class="chat__right__bottom__btn"></button>
                             </div>
-                            <textarea name="message" class="chat__right__bottom__message"></textarea>
-                            <button class="chat__right__bottom__send"></button>
-                        </div>
+                            <textarea name="message" class="chat__right__bottom__message" id="chat__right__bottom__message"></textarea>
+                            <div class="chat__right__bottom__send" id="chat__right__bottom__send"></div>
+                        </form>
                     </div>
                 {{else}}
                     <div class="chat__right__empty">
@@ -743,5 +710,28 @@ export async function update(name, obj, pathname, template_path){
         set(store, name, obj)
         updateRoute(pathname, store[template_path])
         resolve(obj);
+    })
+}
+
+export async function pushStore(name, obj, pathname, template_path){
+    return new Promise((resolve, reject) => {
+        store['chat']['context']['chat_detail']['messages_block'][0]['messages'].push(obj)
+        updateRoute(pathname, store[template_path])
+        resolve(obj);
+    })
+}
+
+export async function shiftStore(name, obj, pathname, template_path){
+    return new Promise((resolve, reject) => {
+        store['chat']['context']['chat_detail']['messages_block'][0]['messages'].unshift(obj)
+        updateRoute(pathname, store[template_path])
+        resolve(obj);
+    })
+}
+
+export async function clearMessage(pathname, template_path){
+    return new Promise((resolve, reject) => {
+        store['chat']['context']['chat_detail']['messages_block'][0]['messages'] = []
+        updateRoute(pathname, store[template_path])
     })
 }

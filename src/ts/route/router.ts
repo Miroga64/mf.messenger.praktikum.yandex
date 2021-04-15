@@ -1,8 +1,8 @@
-import compileTemplate from '../compile_template.js';
-import scripts from '../script.js'
-import { Button, render_btn } from '../components/button.js';
-import { store } from '../helpers/store.js'
-import { start_update } from "../helpers/api.js"
+import compileTemplate from '../compile_template.ts';
+import scripts from '../script.ts'
+import { Button, render_btn } from '../components/button.ts';
+import { store } from '../helpers/store.ts'
+import { start_update } from "../helpers/api.ts"
 
 
 

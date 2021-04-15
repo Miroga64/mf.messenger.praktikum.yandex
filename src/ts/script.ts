@@ -1,6 +1,13 @@
-import { goto } from "./route/router.js"
-import { store, update } from './helpers/store.js'
-import { start_update, update_data, update_pass, system_out, create_chat, delete_chat, add_personal_avatar, detail_chat, add_user_to_chat, delete_users_from_chat} from "./helpers/api.js"
+'use strict'
+import "../scss/chat.scss"
+import "../scss/empty_page.scss"
+import "../scss/form.scss"
+import "../scss/main.scss"
+import "../scss/popup.scss"
+import "../scss/profile.scss"
+import { goto } from "./route/router.ts"
+import { store, update, pushStore, clearMessage, shiftStore } from './helpers/store.ts'
+import { start_update, update_data, update_pass, getToken, system_out, create_chat, delete_chat, add_personal_avatar, detail_chat, add_user_to_chat, delete_users_from_chat} from "./helpers/api.ts"
 export default function scripts(){
 
     setTimeout(() => {
@@ -17,6 +24,11 @@ export default function scripts(){
         const chat_action = document.querySelectorAll('.chat__right__header__right')
         const add_user = document.querySelector('.chat__right__header__action.add')
         const remove_user = document.querySelector('.chat__right__header__action.rotate')
+        let chat_id = 0;
+        let chat_token = 0;
+        let isMsg = false;
+        const socket_host = "wss://ya-praktikum.tech/ws/chats/";
+        let socketActive = new WebSocket(socket_host);
 
 
         if (inputs) {
@@ -194,11 +206,23 @@ export default function scripts(){
                             if(doc.files[0]){
                                 obj.file = doc.files[0]
                                 console.log(obj)
-                                create_chat(obj).then( response => {
-                                    goto('/build/route/chat.html')
-                                })
                             }
                         }
+                        create_chat(obj)
+                        .then( response => {
+                            // let users = obj.users.split(',')
+                            // console.log(response)
+                            // console.log(users)
+                            // let needUser;
+                            // users.forEach(element => {
+                            //     element = element.trim();
+                            //     if(element == localStorage.getItem('user_id')){
+                            //         needUser = element;
+                            //     }
+                            // })
+                            // console.log(needUser)
+                            goto('/build/route/chat.html')
+                        })
                     }
     
     
@@ -267,6 +291,7 @@ export default function scripts(){
                 system_out().then( response => {
                     delete localStorage.login;
                     delete localStorage.password;
+                    delete localStorage.user_id;
                 })
             })
         }
@@ -323,6 +348,8 @@ export default function scripts(){
         if(chat_dialog){
             chat_dialog.forEach(function(element){
                 element.addEventListener('click', function(this: any, ){
+                    chat_id = parseInt(this.getAttribute('data-id'));
+                    
                     detail_chat({'id': parseInt(this.getAttribute('data-id'))})
                     .then((response: any) => {
                         let users =  JSON.parse(response.response)
@@ -338,6 +365,135 @@ export default function scripts(){
                     .then( response => {
                         goto('/build/route/chat.html')
                     })
+                    .then( response => {
+                        return getToken(chat_id)
+                    })
+                    .then((response: any) => {
+                        chat_token = JSON.parse(response.response).token
+                        if(typeof socketActive == 'object'){
+                            console.log('change_chat')
+                            socketActive.close()
+                            clearMessage('/build/route/chat.html', 'chat')
+                            goto('/build/route/chat.html')
+                        }
+                        socketActive = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${localStorage.getItem('user_id')}/${chat_id}/${chat_token}`); 
+                       
+                        socketActive.addEventListener('open', () => {
+                            console.log('Соединение установлено');
+
+                            socketActive.send(JSON.stringify({
+                                content: '0',
+                                type: 'get old',
+                            }));
+                        });
+                        
+                        socketActive.addEventListener('close', event => {
+                            if (event.wasClean) {
+                                console.log('Соединение закрыто чисто');
+                            } else {
+                                console.log('Обрыв соединения');
+                            }
+                        
+                            console.log(`Код: ${event.code} | Причина: ${event.reason}`);
+
+                            if(event.code == 1006){
+                                console.log('reconnect')
+                                socketActive = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${localStorage.getItem('user_id')}/${chat_id}/${chat_token}`); 
+                            }
+                        });
+
+                        
+                        socketActive.addEventListener('message', event => {
+                            if(Array.isArray(JSON.parse(event.data))){
+                                JSON.parse(event.data).forEach(element => {
+                                    if(element['content']){
+                                        if(element['user_id'] == localStorage.getItem('user_id')){
+                                            let obj = {
+                                                type: 'outcoming', 
+                                                content: element['content'],
+                                                time: element['time'],
+                                                read: element['is_read']
+                                            }
+                                            console.log(element)
+                                            shiftStore('chat.context.chat_detail.messages_block.messages', obj, '/build/route/chat.html', 'chat')
+                                        }else{
+                                            let obj = {
+                                                type: 'incoming', 
+                                                content: element['content'],
+                                                time: element['time'],
+                                                read: element['is_read']
+                                            }
+                                            console.log(element)
+                                            shiftStore('chat.context.chat_detail.messages_block.messages', obj, '/build/route/chat.html', 'chat')
+                                        } 
+                                    }
+                                });
+                                goto('/build/route/chat.html')
+                                console.log('Получены данные', event.data);
+                            }else{
+                                if(JSON.parse(event.data)['content'] && JSON.parse(event.data)['content'] != "Something's wrong. Try again"){
+                                    
+                                    if(JSON.parse(event.data)['user_id'] == localStorage.getItem('user_id')){
+                                        let obj = {
+                                            type: 'outcoming', 
+                                            content: JSON.parse(event.data)['content'],
+                                            time: JSON.parse(event.data)['time'],
+                                            read: JSON.parse(event.data)['is_read']
+                                        }
+                                        console.log(JSON.parse(event.data))
+                                        pushStore('chat.context.chat_detail.messages_block.messages', obj, '/build/route/chat.html', 'chat')
+                                    }else{
+                                        let obj = {
+                                            type: 'incoming', 
+                                            content: JSON.parse(event.data)['content'],
+                                            time: JSON.parse(event.data)['time'],
+                                            read: JSON.parse(event.data)['is_reads']
+                                        }
+                                        console.log(JSON.parse(event.data))
+                                        pushStore('chat.context.chat_detail.messages_block.messages', obj, '/build/route/chat.html', 'chat')
+                                    }  
+                                    goto('/build/route/chat.html')
+                                    console.log('Получены данные', event.data);    
+                                }
+                            }
+                           
+                        });
+                        
+                        socketActive.addEventListener('error', (event: any) => {
+                            console.log('Ошибка', event.message);
+                        });
+                        
+                        setInterval(()=>{
+                            socketActive.send(JSON.stringify({
+                                type: 'message',
+                            }));
+                        }, 10000)
+                      
+                    })
+
+                    const send_msg = document.getElementById('chat__right__bottom__send');
+
+                    if(send_msg && !isMsg){
+                        document.removeEventListener('click', (<any>document).funcForTarget, false);
+                        document.addEventListener('click', (<any>document).funcForTarget = function targetCheck(e){
+                            let target_now: any = e.target
+                            if(target_now){
+                                if(target_now.id == 'chat__right__bottom__send'){
+                                    console.log('message')
+                                    let text = ''
+                                    let elem = (<HTMLInputElement>document.getElementById('chat__right__bottom__message'))
+                                    if(elem){
+                                        text = elem.value;
+                                    }
+                                    console.log(text)
+                                    socketActive.send(JSON.stringify({
+                                        content: text,
+                                        type: 'message',
+                                    }));
+                                }
+                            }
+                        }, false)
+                    }
                 })
             })
         }
@@ -363,5 +519,5 @@ export default function scripts(){
 function class_act(selector_name, act_name, class_name) {
     selector_name.forEach((element) => {
         element.classList[act_name](class_name);
-    });
+    })
 }

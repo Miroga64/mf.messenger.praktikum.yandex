@@ -2,6 +2,7 @@
 
 set -e
 rm -rf ./build
+
 tsc -p ./
 
 cd ./build

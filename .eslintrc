@@ -1,0 +1,14 @@
+{
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "rules": {
+      "max-len": [1, 170, 2]
+    },
+    "eslintIgnore": ["script.ts"]
+  }
