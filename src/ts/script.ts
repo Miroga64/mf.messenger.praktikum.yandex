@@ -1,3 +1,4 @@
+'use strict'
 import "../scss/chat.scss"
 import "../scss/empty_page.scss"
 import "../scss/form.scss"
@@ -467,31 +468,32 @@ export default function scripts(){
                                 type: 'message',
                             }));
                         }, 10000)
-                        const send_msg = document.getElementById('chat__right__bottom__send')
-                        console.log(send_msg)
-                        if(send_msg && !isMsg){
-                            document.removeEventListener('click', (<any>document).funcForTarget, false);
-                            document.addEventListener('click', (<any>document).funcForTarget = function targetCheck(e){
-                                let target_now: any = e.target
-                                if(target_now){
-                                    if(target_now.id == 'chat__right__bottom__send'){
-                                        console.log('message')
-                                        let text = ''
-                                        let elem = (<HTMLInputElement>document.getElementById('chat__right__bottom__message'))
-                                        if(elem){
-                                            text = elem.value;
-                                        }
-                                        console.log(text)
-                                        socketActive.send(JSON.stringify({
-                                            content: text,
-                                            type: 'message',
-                                        }));
-                                    }
-                                }
-                            }, false)
-                        }
                       
                     })
+
+                    const send_msg = document.getElementById('chat__right__bottom__send');
+
+                    if(send_msg && !isMsg){
+                        document.removeEventListener('click', (<any>document).funcForTarget, false);
+                        document.addEventListener('click', (<any>document).funcForTarget = function targetCheck(e){
+                            let target_now: any = e.target
+                            if(target_now){
+                                if(target_now.id == 'chat__right__bottom__send'){
+                                    console.log('message')
+                                    let text = ''
+                                    let elem = (<HTMLInputElement>document.getElementById('chat__right__bottom__message'))
+                                    if(elem){
+                                        text = elem.value;
+                                    }
+                                    console.log(text)
+                                    socketActive.send(JSON.stringify({
+                                        content: text,
+                                        type: 'message',
+                                    }));
+                                }
+                            }
+                        }, false)
+                    }
                 })
             })
         }
