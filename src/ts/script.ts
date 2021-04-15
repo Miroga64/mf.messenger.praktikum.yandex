@@ -1,6 +1,12 @@
-import { goto } from "./route/router.js"
-import { store, update, pushStore, clearMessage, shiftStore } from './helpers/store.js'
-import { start_update, update_data, update_pass, getToken, system_out, create_chat, delete_chat, add_personal_avatar, detail_chat, add_user_to_chat, delete_users_from_chat} from "./helpers/api.js"
+import "../scss/chat.scss"
+import "../scss/empty_page.scss"
+import "../scss/form.scss"
+import "../scss/main.scss"
+import "../scss/popup.scss"
+import "../scss/profile.scss"
+import { goto } from "./route/router.ts"
+import { store, update, pushStore, clearMessage, shiftStore } from './helpers/store.ts'
+import { start_update, update_data, update_pass, getToken, system_out, create_chat, delete_chat, add_personal_avatar, detail_chat, add_user_to_chat, delete_users_from_chat} from "./helpers/api.ts"
 export default function scripts(){
 
     setTimeout(() => {
@@ -465,10 +471,10 @@ export default function scripts(){
                         console.log(send_msg)
                         if(send_msg && !isMsg){
                             document.removeEventListener('click', (<any>document).funcForTarget, false);
-                            document.addEventListener('click', (<any>document).funcForTarget = function targetFunc(e){
-                                let target: any = e.target
-                                if(target){
-                                    if(target.id == 'chat__right__bottom__send'){
+                            document.addEventListener('click', (<any>document).funcForTarget = function targetCheck(e){
+                                let target_now: any = e.target
+                                if(target_now){
+                                    if(target_now.id == 'chat__right__bottom__send'){
                                         console.log('message')
                                         let text = ''
                                         let elem = (<HTMLInputElement>document.getElementById('chat__right__bottom__message'))
@@ -484,7 +490,7 @@ export default function scripts(){
                                 }
                             }, false)
                         }
-                        
+                      
                     })
                 })
             })
@@ -511,5 +517,5 @@ export default function scripts(){
 function class_act(selector_name, act_name, class_name) {
     selector_name.forEach((element) => {
         element.classList[act_name](class_name);
-    });
+    })
 }

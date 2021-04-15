@@ -2,10 +2,10 @@ Handlebars.registerHelper('isIncoming', function (value) {
     return value == 'incoming' ? true : false;
 });
 
-import set from './set.js'
-import push from './push.js'
+import set from './set.ts'
+import push from './push.ts'
 
-import {updateRoute} from '../route/router.js'
+import {updateRoute} from '../route/router.ts'
 
 export let store: any = {
     sign:{

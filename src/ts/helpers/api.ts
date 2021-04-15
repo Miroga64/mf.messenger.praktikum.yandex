@@ -1,5 +1,5 @@
-import { HTTPTransport } from './fetch.js';
-import { update } from './store.js';
+import { HTTPTransport } from './fetch.ts';
+import { update } from './store.ts';
 const host = "https://ya-praktikum.tech/api/v2";
 let aut = new HTTPTransport;
 let socketMass = [];

@@ -43,7 +43,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    background-image: url(/static/images/profile_arrow.svg);
+    background-image: url(/build/images/profile_arrow.svg);
     margin-left: 8px;
 }
 
@@ -61,7 +61,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    background-image: url(/static/images/magnifire.svg);
+    background-image: url(/build/images/magnifire.svg);
     right: 6px;
     top: 6px;
 }
@@ -222,7 +222,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    background-image: url(/static/images/close.svg);
+    background-image: url(/build/images/close.svg);
     position: absolute;
     visibility: hidden;
     opacity: 0;
@@ -312,7 +312,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    background-image: url(/static/images/user_btn.svg);
+    background-image: url(/build/images/user_btn.svg);
 }
 
 .chat__right__content{
@@ -440,7 +440,7 @@
     background-position: right;
     background-repeat: no-repeat;
     background-size: contain;
-    background-image: url(/static/images/icon_read_grey.svg);
+    background-image: url(/build/images/icon_read_grey.svg);
     margin-right: 5px;
 }
 .chat__right__content__outcoming .chat__right__content__time{
@@ -460,7 +460,7 @@
     background-position: right;
     background-repeat: no-repeat;
     background-size: contain;
-    background-image: url(/static/images/icon_read_blue.svg);
+    background-image: url(/build/images/icon_read_blue.svg);
     margin-right: 3px;
 }
 
@@ -515,7 +515,7 @@
     height: 28px;
     border-radius: 50%;
     background-color: #3369F3;
-    background-image: url(/static/images/message_send.svg);
+    background-image: url(/build/images/message_send.svg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -535,7 +535,7 @@
     background-repeat: no-repeat;
     cursor: pointer;
     background-size: contain;
-    background-image: url(/static/images/bracket.svg);
+    background-image: url(/build/images/bracket.svg);
 }
 .chat__right__header__actions{
     padding: 15px;
@@ -576,7 +576,7 @@
     height: 24px;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url(/static/images/add_user.svg);
+    background-image: url(/build/images/add_user.svg);
     margin-right: 16px;
     border-radius: 50%;
     border: 1px solid #3369F3;
