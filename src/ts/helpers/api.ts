@@ -2,6 +2,7 @@ import { HTTPTransport } from './fetch.js';
 import { update } from './store.js';
 const host = "https://ya-praktikum.tech/api/v2";
 let aut = new HTTPTransport;
+let socketMass = [];
 export function auth(obj) {
 
         return aut.post_cookie(`${host}/auth/signup`, {
@@ -29,6 +30,11 @@ export function user_info() {
         return aut.get_cookie(`${host}/auth/user`);
 
 }
+
+export function getToken(id){
+    return aut.post_cookie(`${host}/chats/token/${id}`)
+}
+
 export function chats(obj) {
 
         if (obj) {
@@ -38,10 +44,39 @@ export function chats(obj) {
                     Accept: "application/json",
                 },
                 data: obj
-            });
+            })
+            // .then((response: any) => {
+            //     let resp = JSON.parse(response.response)
+            //     resp.forEach((element: any) => {
+            //         getToken(element['id']).then((response_new: any) => {
+            //             console.log('WITH OBJ')
+            //             console.log(JSON.parse(response_new.response).token)
+            //             const sockett = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${localStorage.getItem('user_id')}/${element['id']}/${JSON.parse(response_new.response).token}`); 
+            //             let id: any = element['id'].toString();
+            //         })
+            //     })
+
+            //     return new Promise((resolve, reject) => {
+            //         resolve(response)
+            //     })
+            // });
         }
         else {
-            return aut.get_cookie(`${host}/chats`);
+            return aut.get_cookie(`${host}/chats`)
+            // .then((response: any) => {
+            //     let resp = JSON.parse(response.response)
+            //     resp.forEach((element: any) => {
+            //         getToken(element['id']).then((response_new: any) => {
+            //             console.log('WITHOUT OBJ')
+            //             console.log(JSON.parse(response_new.response).token)
+            //             const sockett = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${localStorage.getItem('user_id')}/${element['id']}/${JSON.parse(response_new.response).token}`); 
+            //         })
+            //     })
+
+            //     return new Promise((resolve, reject) => {
+            //         resolve(response)
+            //     })
+            // });
         }
 
 }
@@ -69,7 +104,7 @@ export function delete_users_from_chat(obj) {
 }
 export function detail_chat(obj) {
 
-        return aut.get_cookie(`${host}/chats/${obj.id}/users`);
+    return aut.get_cookie(`${host}/chats/${obj.id}/users`);
 
 }
 export function delete_chat(obj) {
@@ -229,6 +264,7 @@ export function start_update(name, obj) {
                 alert(e);
             })
                 .then((response: any) => {
+                localStorage.setItem('user_id',  JSON.parse(response.response).id);
                 return update('profile.context.profile_edit', JSON.parse(response.response), '/build/route/profile.html', 'profile');
             })
                 .then(response => {
@@ -254,6 +290,7 @@ export function start_update(name, obj) {
                 alert(e);
             })
                 .then((response: any) => {
+                localStorage.setItem('user_id', JSON.parse(response.response).id);
                 return update('profile.context.profile_edit', JSON.parse(response.response), '/build/route/profile.html', 'profile');
             })
                 .then(response => {
