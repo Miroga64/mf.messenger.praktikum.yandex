@@ -1,8 +1,7 @@
-import { HTTPTransport } from './fetch.ts';
-import { update } from './store.ts';
+import { HTTPTransport } from './fetch';
+import { update } from './store';
 const host = "https://ya-praktikum.tech/api/v2";
 let aut = new HTTPTransport;
-let socketMass = [];
 export function auth(obj) {
 
         return aut.post_cookie(`${host}/auth/signup`, {
@@ -121,7 +120,7 @@ export function delete_chat(obj) {
             alert(e);
         })
             .then((response: any) => {
-            return update('chat.context.chat_list', JSON.parse(response.response), '/build/route/chat.html', 'chat');
+            return update('chat.context.chat_list', JSON.parse(response.response), '/chat.html', 'chat');
         }).catch(e => {
             alert(e);
         });
@@ -160,7 +159,7 @@ export function create_chat(obj) {
                 }).then(response => {
                     return chats({ 'limit': 100 });
                 }).then((response: any) => {
-                    return update('chat.context.chat_list', JSON.parse(response.response), '/build/route/chat.html', 'chat');
+                    return update('chat.context.chat_list', JSON.parse(response.response), '/chat.html', 'chat');
                 });
             }
             else {
@@ -188,7 +187,7 @@ export function create_chat(obj) {
                 }).then(response => {
                     return chats({ 'limit': 100 });
                 }).then((response: any) => {
-                    return update('chat.context.chat_list', JSON.parse(response.response), '/build/route/chat.html', 'chat');
+                    return update('chat.context.chat_list', JSON.parse(response.response), '/chat.html', 'chat');
                 });
             }
         }
@@ -233,9 +232,9 @@ export function add_personal_avatar(obj) {
         }).then(data => {
             return user_info();
         }).then((response: any) => {
-            return update('profile.context.profile_edit', JSON.parse(response.response), '/build/route/profile.html', 'profile');
+            return update('profile.context.profile_edit', JSON.parse(response.response), '/profile.html', 'profile');
         }).then(response => {
-            return update('profile_edit.context.profile_edit', response, '/build/route/profile_edit.html', 'profile_edit');
+            return update('profile_edit.context.profile_edit', response, '/profile_edit.html', 'profile_edit');
         });
 
 }
@@ -265,16 +264,16 @@ export function start_update(name, obj) {
             })
                 .then((response: any) => {
                 localStorage.setItem('user_id',  JSON.parse(response.response).id);
-                return update('profile.context.profile_edit', JSON.parse(response.response), '/build/route/profile.html', 'profile');
+                return update('profile.context.profile_edit', JSON.parse(response.response), '/profile.html', 'profile');
             })
                 .then(response => {
-                return update('profile_edit.context.profile_edit', response, '/build/route/profile_edit.html', 'profile_edit');
+                return update('profile_edit.context.profile_edit', response, '/profile_edit.html', 'profile_edit');
             })
                 .then(data => {
                 return chats({ 'limit': 100 });
             })
                 .then((response: any) => {
-                return update('chat.context.chat_list', JSON.parse(response.response), '/build/route/chat.html', 'chat');
+                return update('chat.context.chat_list', JSON.parse(response.response), '/chat.html', 'chat');
             });
         }
         else {
@@ -291,10 +290,10 @@ export function start_update(name, obj) {
             })
                 .then((response: any) => {
                 localStorage.setItem('user_id', JSON.parse(response.response).id);
-                return update('profile.context.profile_edit', JSON.parse(response.response), '/build/route/profile.html', 'profile');
+                return update('profile.context.profile_edit', JSON.parse(response.response), '/profile.html', 'profile');
             })
                 .then(response => {
-                return update('profile_edit.context.profile_edit', response, '/build/route/profile_edit.html', 'profile_edit');
+                return update('profile_edit.context.profile_edit', response, '/profile_edit.html', 'profile_edit');
             })
                 .then(response => {
                 localStorage.setItem('login', obj.login);
@@ -302,7 +301,7 @@ export function start_update(name, obj) {
                 return chats({ 'limit': 100 });
             })
                 .then((response: any) => {
-                return update('chat.context.chat_list', JSON.parse(response.response), '/build/route/chat.html', 'chat');
+                return update('chat.context.chat_list', JSON.parse(response.response), '/chat.html', 'chat');
             });
         }
 }

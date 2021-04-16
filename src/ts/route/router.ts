@@ -1,8 +1,8 @@
-import compileTemplate from '../compile_template.ts';
-import scripts from '../script.ts'
-import { Button, render_btn } from '../components/button.ts';
-import { store } from '../helpers/store.ts'
-import { start_update } from "../helpers/api.ts"
+import compileTemplate from '../compile_template';
+import scripts from '../script'
+import { Button, render_btn } from '../components/button';
+import { store } from '../helpers/store'
+import { start_update } from "../helpers/api"
 
 
 
@@ -150,7 +150,7 @@ class Router {
     start() {
         window.onpopstate = event => {
             if(localStorage.getItem('login') && (event.currentTarget.location.pathname.indexOf('main') || !event.currentTarget.location.pathname.indexOf('registration'))){
-                this.go('/build/route/chat.html')
+                this.go('/chat.html')
             }else{
                 this._onRoute(event.currentTarget.location.pathname);
             }
@@ -204,28 +204,30 @@ if(localStorage.getItem('login')){
     start_update('sign', object)
     .then( data => {
         router
-            .use("/build/route/main.html", Block, store.sign)
-            .use("/build/route/registration.html", Block, store.registration)
-            .use("/build/route/profile.html", Block, store.profile)
-            .use("/build/route/profile_edit.html", Block, store.profile_edit)
-            .use("/build/route/pass_edit.html", Block, store.pass_edit)
-            .use("/build/route/chat.html", Block, store.chat)
-            .use("/build/route/page_404.html", Block, store.page_404)
-            .use("/build/route/page_500.html", Block, store.page_500)
+            .use("/", Block, store.sign)
+            .use("/index.html", Block, store.sign)
+            .use("/registration.html", Block, store.registration)
+            .use("/profile.html", Block, store.profile)
+            .use("/profile_edit.html", Block, store.profile_edit)
+            .use("/pass_edit.html", Block, store.pass_edit)
+            .use("/chat.html", Block, store.chat)
+            .use("/page_404.html", Block, store.page_404)
+            .use("/page_500.html", Block, store.page_500)
             .start();
     }).catch(e => {
         alert(e)
     })
 } else{
     router
-        .use("/build/route/main.html", Block, store.sign)
-        .use("/build/route/registration.html", Block, store.registration)
-        .use("/build/route/profile.html", Block, store.profile)
-        .use("/build/route/profile_edit.html", Block, store.profile_edit)
-        .use("/build/route/pass_edit.html", Block, store.pass_edit)
-        .use("/build/route/chat.html", Block, store.chat)
-        .use("/build/route/page_404.html", Block, store.page_404)
-        .use("/build/route/page_500.html", Block, store.page_500)
+        .use("/", Block, store.sign)
+        .use("/index.html", Block, store.sign)
+        .use("/registration.html", Block, store.registration)
+        .use("/profile.html", Block, store.profile)
+        .use("/profile_edit.html", Block, store.profile_edit)
+        .use("/pass_edit.html", Block, store.pass_edit)
+        .use("/chat.html", Block, store.chat)
+        .use("/page_404.html", Block, store.page_404)
+        .use("/page_500.html", Block, store.page_500)
         .start();
 }
 

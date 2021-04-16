@@ -3,9 +3,8 @@ WORKDIR /var/www
 COPY package*.json ./
 RUN npm install
 COPY . .
-EXPOSE 8080
+EXPOSE 4000
 RUN npx webpack
 CMD [ "node", "./server.js" ]
-
 
 
