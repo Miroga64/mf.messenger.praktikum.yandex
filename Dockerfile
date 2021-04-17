@@ -5,6 +5,6 @@ RUN npm install
 COPY . .
 EXPOSE 0
 RUN npx webpack
-CMD [ "node", "./server.js" ]
+CMD [ "node", "server.js" ]
 
 

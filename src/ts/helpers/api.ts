@@ -1,5 +1,7 @@
 import { HTTPTransport } from './fetch';
 import { update } from './store';
+import {goto} from '../route/router'
+
 const host = "https://ya-praktikum.tech/api/v2";
 let aut = new HTTPTransport;
 export function auth(obj) {
@@ -44,38 +46,9 @@ export function chats(obj) {
                 },
                 data: obj
             })
-            // .then((response: any) => {
-            //     let resp = JSON.parse(response.response)
-            //     resp.forEach((element: any) => {
-            //         getToken(element['id']).then((response_new: any) => {
-            //             console.log('WITH OBJ')
-            //             console.log(JSON.parse(response_new.response).token)
-            //             const sockett = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${localStorage.getItem('user_id')}/${element['id']}/${JSON.parse(response_new.response).token}`); 
-            //             let id: any = element['id'].toString();
-            //         })
-            //     })
-
-            //     return new Promise((resolve, reject) => {
-            //         resolve(response)
-            //     })
-            // });
         }
         else {
             return aut.get_cookie(`${host}/chats`)
-            // .then((response: any) => {
-            //     let resp = JSON.parse(response.response)
-            //     resp.forEach((element: any) => {
-            //         getToken(element['id']).then((response_new: any) => {
-            //             console.log('WITHOUT OBJ')
-            //             console.log(JSON.parse(response_new.response).token)
-            //             const sockett = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${localStorage.getItem('user_id')}/${element['id']}/${JSON.parse(response_new.response).token}`); 
-            //         })
-            //     })
-
-            //     return new Promise((resolve, reject) => {
-            //         resolve(response)
-            //     })
-            // });
         }
 
 }
@@ -180,9 +153,6 @@ export function create_chat(obj) {
                     let formData = new FormData();
                     formData.append('chatId', chat_id);
                     formData.append('avatar', obj.file, obj.avatar);
-                    for (let [name, value] of formData) {
-                        console.log(`${name} = ${value}`);
-                    }
                     return add_picture(formData);
                 }).then(response => {
                     return chats({ 'limit': 100 });
@@ -216,7 +186,6 @@ export function update_data(obj) {
 
 }
 export function add_picture(obj) {
-        console.log(obj+'--------------------------')
         return aut.put_formdata(`${host}/chats/avatar`, {
             data: obj
         })
@@ -244,18 +213,14 @@ export function start_update(name, obj) {
             return auth(obj)
                 .then((response: any) => {
                 if (response.status == 409 || response.status == 401 || response.status == 400 || response.status == 404) {
-                    console.log('Login already exists');
                     throw new Error('Login already exists');
                 }
-                localStorage.setItem('login', obj.login);
-                localStorage.setItem('password', obj.password);
-                return sign({ 'login': localStorage.getItem('login'), 'password': localStorage.getItem('password') });
+                return sign({ 'login': obj.login, 'password': obj.login});
             }).catch(e => {
                 alert(e);
             })
                 .then((data: any) => {
                 if (data.status == 409 || data.status == 401 || data.status == 400 || data.status == 404) {
-                    console.log('Login already exists');
                     throw new Error('Login already exists');
                 }
                 return user_info();
@@ -279,9 +244,7 @@ export function start_update(name, obj) {
         else {
             return sign(obj)
                 .then((data: any) => {
-                console.log(data.status);
                 if (data.status == 401) {
-                    console.log('Логин или пароль неверные');
                     throw new Error('Логин или пароль неверные');
                 }
                 return user_info();
@@ -295,13 +258,31 @@ export function start_update(name, obj) {
                 .then(response => {
                 return update('profile_edit.context.profile_edit', response, '/profile_edit.html', 'profile_edit');
             })
-                .then(response => {
-                localStorage.setItem('login', obj.login);
-                localStorage.setItem('password', obj.password);
+                .then(() => {
                 return chats({ 'limit': 100 });
             })
                 .then((response: any) => {
                 return update('chat.context.chat_list', JSON.parse(response.response), '/chat.html', 'chat');
             });
         }
+}
+
+export function page_update(){
+    return user_info()
+            .then((response: any) => {
+                localStorage.setItem('user_id', JSON.parse(response.response).id);
+                return update('profile.context.profile_edit', JSON.parse(response.response), '/profile.html', 'profile');
+            })
+            .catch(()=>{
+                goto("/")
+            })
+            .then(response => {
+                return update('profile_edit.context.profile_edit', response, '/profile_edit.html', 'profile_edit');
+            })
+            .then(() => {
+                return chats({ 'limit': 100 });
+            })
+            .then((response: any) => {
+                return update('chat.context.chat_list', JSON.parse(response.response), '/chat.html', 'chat');
+            })
 }

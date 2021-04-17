@@ -2,14 +2,19 @@ import compileTemplate from '../compile_template';
 import scripts from '../script'
 import { Button, render_btn } from '../components/button';
 import { store } from '../helpers/store'
-import { start_update } from "../helpers/api"
+import { page_update } from "../helpers/api"
 
 
 
+interface btn {
+    value: number;
+    class: string;
+    container: string;
+}
 
 class Block {
-    _html: any;
-    _btn: any;
+    _html: string;
+    _btn:  btn;
     constructor( obj ){
         this._html = obj != '' ? compileTemplate(obj.sources, obj.context) : '';
         this._btn = obj.button
@@ -46,7 +51,7 @@ function isEqual(lhs, rhs) {
     return lhs === rhs;
 }
 
-function render(query, block, isScripts = true) {
+function render(query, block) {
 
     const root = document.querySelector(query);
     let content = block.getContent()
@@ -63,7 +68,7 @@ function render(query, block, isScripts = true) {
 }
   
 class Route {
-    _pathname: any;
+    _pathname: string;
     _blockClass: any;
     _block: any;
     _props: any; 
@@ -76,7 +81,6 @@ class Route {
     }
   
     navigate(pathname) {
-        console.log('navigate')
         if (this.match(pathname)) {
             this._pathname = pathname;
             this.render();
@@ -91,7 +95,6 @@ class Route {
     }
 
     leave() {
-      console.log('leave')
     }
 
     match(pathname) {
@@ -100,8 +103,6 @@ class Route {
     }
 
     render() {
-        console.log('render up')
-
         if (!this._block) {
             this._block = new this._blockClass(this._props.obj);
             render(this._props.rootQuery, this._block);
@@ -149,7 +150,7 @@ class Router {
 
     start() {
         window.onpopstate = event => {
-            if(localStorage.getItem('login') && (event.currentTarget.location.pathname.indexOf('main') || !event.currentTarget.location.pathname.indexOf('registration'))){
+            if(localStorage.getItem('user_id') && (event.currentTarget.location.pathname.indexOf('main') || !event.currentTarget.location.pathname.indexOf('registration'))){
                 this.go('/chat.html')
             }else{
                 this._onRoute(event.currentTarget.location.pathname);
@@ -163,14 +164,17 @@ class Router {
         scripts();
         const route = this.getRoute(pathname);
         if (!route) {
-            return;
+            goto('/page_404.html')
+        }else{
+            if (this._currentRoute) {
+                this._currentRoute.leave();
+            }
+    
+            this._currentRoute = route;
+            route.render();
         }
 
-        if (this._currentRoute) {
-            this._currentRoute.leave();
-        }
-        this._currentRoute = route;
-        route.render();
+
     }
 
     go(pathname) {
@@ -179,14 +183,10 @@ class Router {
     }
 
     back() {
-        console.log('back')
-
         this.history.back()
     }
 
     forward() { 
-        console.log('forward')
-
         let forward = this.history.forward()
         this._onRoute(forward);
     }
@@ -199,10 +199,9 @@ class Router {
   
 const router = new Router(".app");
 
-if(localStorage.getItem('login')){
-    let object = {'login':localStorage.getItem('login'), 'password': localStorage.getItem('password')}
-    start_update('sign', object)
-    .then( data => {
+if(localStorage.getItem('user_id')){
+    page_update()
+    .then( () => {
         router
             .use("/", Block, store.sign)
             .use("/index.html", Block, store.sign)
@@ -215,7 +214,7 @@ if(localStorage.getItem('login')){
             .use("/page_500.html", Block, store.page_500)
             .start();
     }).catch(e => {
-        alert(e)
+        goto("/index.html")
     })
 } else{
     router

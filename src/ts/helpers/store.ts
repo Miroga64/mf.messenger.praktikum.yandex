@@ -3,7 +3,6 @@ Handlebars.registerHelper('isIncoming', function (value) {
 });
 
 import set from './set'
-import push from './push'
 
 import {updateRoute} from '../route/router'
 
@@ -672,7 +671,7 @@ export let store: any = {
             page_404: {
                 error: "404",
                 text: "Упс, такой страницы не существует",
-                link: "../main_chat/chat_with_controls.html",
+                link: "chat.html",
                 link_text: "Назад к чатам",
             },
         }, 
@@ -690,7 +689,7 @@ export let store: any = {
             page_500: {
                 error: "500",
                 text: "Мы уже это фиксим)",
-                link: "../main_chat/chat_with_controls.html",
+                link: "chat.html",
                 link_text: "Назад к чатам",
             }
         }, 

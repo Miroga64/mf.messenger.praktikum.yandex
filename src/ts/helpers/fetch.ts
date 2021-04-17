@@ -122,7 +122,6 @@ export class HTTPTransport {
       if (method === METHODS.GET || !data) {
         xhr.send();
       } else {
-        console.log(typeof data)
         data = JSON.stringify(data)
         xhr.send(data);
       }
