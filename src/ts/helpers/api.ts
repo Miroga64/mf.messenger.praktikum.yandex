@@ -5,25 +5,25 @@ import {goto} from '../route/router'
 const host = "https://ya-praktikum.tech/api/v2";
 let aut = new HTTPTransport;
 export function auth(obj) {
-
-        return aut.post_cookie(`${host}/auth/signup`, {
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-            },
-            data: obj,
-        });
+    console.log('auth')
+    return aut.post_cookie(`${host}/auth/signup`, {
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        },
+        data: obj,
+    });
 
 }
 export function sign(obj) {
-
-        return aut.post_cookie(`${host}/auth/signin`, {
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-            },
-            data: obj
-        });
+    console.log('sign')
+    return aut.post_cookie(`${host}/auth/signin`, {
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        },
+        data: obj
+    });
 
 }
 export function user_info() {
@@ -123,13 +123,13 @@ export function create_chat(obj) {
                         Accept: "application/json",
                     },
                     data: { 'title': obj.title.toString() }
-                }).then(response => {
+                }).then(() => {
                     return chats({ 'title': obj.title.toString() });
                 }).then((response: any) => {
                     let chat_mass = JSON.parse(response.response);
                     chat_id = chat_mass[0].id;
                     return add_user_to_chat({ 'users': names, "chatId": chat_id });
-                }).then(response => {
+                }).then(() => {
                     return chats({ 'limit': 100 });
                 }).then((response: any) => {
                     return update('chat.context.chat_list', JSON.parse(response.response), '/chat.html', 'chat');
@@ -142,7 +142,7 @@ export function create_chat(obj) {
                         Accept: "application/json",
                     },
                     data: { 'title': obj.title.toString() }
-                }).then(response => {
+                }).then(() => {
                     return chats({ 'title': obj.title.toString() });
                 }).then((response: any) => {
                     let chat_mass = JSON.parse(response.response);
@@ -198,7 +198,7 @@ export function add_personal_avatar(obj) {
         return aut.put_formdata(`${host}/user/profile/avatar`, {
             
             data: dataForm
-        }).then(data => {
+        }).then(() => {
             return user_info();
         }).then((response: any) => {
             return update('profile.context.profile_edit', JSON.parse(response.response), '/profile.html', 'profile');
@@ -211,39 +211,31 @@ export function start_update(name, obj) {
 
         if (name == 'auth') {
             return auth(obj)
-                .then((response: any) => {
+            .then((response: any) => {
                 if (response.status == 409 || response.status == 401 || response.status == 400 || response.status == 404) {
-                    throw new Error('Login already exists');
-                }
-                return sign({ 'login': obj.login, 'password': obj.login});
-            }).catch(e => {
-                alert(e);
-            })
-                .then((data: any) => {
-                if (data.status == 409 || data.status == 401 || data.status == 400 || data.status == 404) {
                     throw new Error('Login already exists');
                 }
                 return user_info();
             }).catch(e => {
                 alert(e);
             })
-                .then((response: any) => {
-                localStorage.setItem('user_id',  JSON.parse(response.response).id);
+            .then((response: any) => {
+                localStorage.setItem('user_id', JSON.parse(response.response).id);
                 return update('profile.context.profile_edit', JSON.parse(response.response), '/profile.html', 'profile');
             })
-                .then(response => {
+            .then(response => {
                 return update('profile_edit.context.profile_edit', response, '/profile_edit.html', 'profile_edit');
             })
-                .then(data => {
+            .then(() => {
                 return chats({ 'limit': 100 });
             })
-                .then((response: any) => {
+            .then((response: any) => {
                 return update('chat.context.chat_list', JSON.parse(response.response), '/chat.html', 'chat');
             });
         }
         else {
             return sign(obj)
-                .then((data: any) => {
+            .then((data: any) => {
                 if (data.status == 401) {
                     throw new Error('Логин или пароль неверные');
                 }

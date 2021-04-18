@@ -77,14 +77,14 @@ export default function submitsScript(){
                 }
                 if(flag && this.closest('form.auth')){
                     start_update('auth', obj)
-                    .then( data => {
+                    .then(() => {
                         goto('/chat.html')
                     })
                 }
     
                 if(flag && this.closest('form.sign')){
                     start_update('sign', obj)
-                    .then( data => {
+                    .then(() => {
                         goto('/chat.html')
                     })
                 }
