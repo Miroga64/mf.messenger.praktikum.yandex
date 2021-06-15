@@ -132,6 +132,7 @@ export default function submitsScript(){
                     if(doc){
                         if(doc.files){
                             obj.file = doc.files[0]
+                            console.log(obj)
                             add_personal_avatar(obj).then(() => {
                                 goto('/profile.html')
                             })

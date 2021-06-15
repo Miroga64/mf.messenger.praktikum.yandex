@@ -162,14 +162,3 @@ export class HTTPTransport {
   }
 }
 
-// export function fetchWithRetry(url, options: any) {
-//   let count = 0;
-//   const repeat = () => {
-//     if(options.retries > 1 && options.retries > count ){
-//       count += 1;
-//       return new HTTPTransport(url, options).then(xhr => new Response(xhr.response)).catch(repeat)
-//     }
-//   }
-//     return new HTTPTransport(url, options).then(xhr => new Response(xhr.response)).catch(repeat)
-// }
-

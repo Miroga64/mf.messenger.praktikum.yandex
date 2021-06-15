@@ -17,5 +17,6 @@ sass ./src/scss/popup.scss ./build/styles/popup.css
 sass ./src/scss/profile.scss ./build/styles/profile.css
 sass ./src/scss/empty_page.scss ./build/styles/empty_page.css
 
-cp -r ./static/images ./build/images
+
 cp -r ./static/route ./build/route
+

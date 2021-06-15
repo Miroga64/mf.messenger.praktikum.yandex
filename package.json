@@ -8,7 +8,7 @@
     "css-loader": "^5.2.1",
     "express": "^4.17.1",
     "extract-text-webpack-plugin": "^3.0.2",
-    "handlebars": "^4.7.6",
+    "handlebars": "^4.7.7",
     "lodash": "^4.17.21",
     "nginx": "^1.0.2",
     "node-sass": "^5.0.0",

@@ -152,7 +152,7 @@ export let store: any = {
             <div class="profile__content">
                 <div class="profile__content__form">
                     <div class="profile__content__header">
-                        <div class="profile__content__avatar" style="background-image: url(https://ya-praktikum.tech{{profile_edit.avatar}})">
+                        <div class="profile__content__avatar" style="background-image: url(https://ya-praktikum.tech/api/v2/resources{{profile_edit.avatar}})">
                             <div class="profile__content__avatar__edit">{{profile_edit.avatar_edit_content}}</div>
                         </div>
                         <div class="profile__content__name">{{profile_edit.first_name}}</div>
@@ -224,7 +224,7 @@ export let store: any = {
             <div class="profile__content">
                 <div class="profile__content__form">
                     <form class="profile__content__header">
-                        <div class="profile__content__avatar editable" style="background-image: url(https://ya-praktikum.tech{{profile_edit.avatar}})">
+                        <div class="profile__content__avatar editable" style="background-image: url(https://ya-praktikum.tech/api/v2/resources{{profile_edit.avatar}})">
                             <div data-popup="popup_add_avatar" class="profile__content__avatar__edit">{{ profile_edit.avatar_edit_content }}</div>
                         </div>
                     </form>
@@ -496,7 +496,7 @@ export let store: any = {
                     {{#each chat_list}}
                         <li class="chat__left__dialog" data-id = {{this.id}}>
                             {{#if this.avatar}}
-                                <div class="chat__left__dialog__avatar" style="background-image: url(https://ya-praktikum.tech{{this.avatar}})"></div>
+                                <div class="chat__left__dialog__avatar" style="background-image: url(https://ya-praktikum.tech/api/v2/resources{{this.avatar}})"></div>
                             {{else}}
                                 <div class="chat__left__dialog__avatar" ></div>
                             {{/if}}
@@ -722,7 +722,7 @@ export async function pushStore(name, obj, pathname, template_path){
 
 export async function shiftStore(name, obj, pathname, template_path){
     return new Promise((resolve, reject) => {
-        store['chat']['context']['chat_detail']['messages_block'][0]['messages'].unshift(obj)
+        store['chat']['context']['chat_detail']['messages_block'][0]['messages'].push(obj)
         updateRoute(pathname, store[template_path])
         resolve(obj);
     })

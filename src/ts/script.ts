@@ -15,7 +15,6 @@ import chatScript from './scripts_helper/chatDialog'
 
 import { delete_chat } from "./helpers/api"
 export default function scripts(){
-
     setTimeout(() => {
         const popup_close = document.querySelectorAll('.popup__close')
         const popup_call = document.querySelectorAll('[data-popup]')

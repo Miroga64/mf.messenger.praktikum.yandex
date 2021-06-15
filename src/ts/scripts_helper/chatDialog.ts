@@ -46,7 +46,6 @@ export default function chatScript(){
                     socketActive = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${localStorage.getItem('user_id')}/${chat_id}/${chat_token}`); 
                    
                     socketActive.addEventListener('open', () => {
-
                         socketActive.send(JSON.stringify({
                             content: '0',
                             type: 'get old',
@@ -131,9 +130,7 @@ export default function chatScript(){
                   
                 })
 
-                const send_msg = document.getElementById('chat__right__bottom__send');
-
-                if(send_msg && !isMsg){
+                if(!isMsg){
                     document.removeEventListener('click', (<any>document).funcForTarget, false);
                     document.addEventListener('click', (<any>document).funcForTarget = function targetCheck(e){
                         let target_now: any = e.target
