@@ -11,7 +11,7 @@
     "handlebars": "^4.7.6",
     "lodash": "^4.17.21",
     "nginx": "^1.0.2",
-    "node-sass": "^5.0.0",
+    "node-sass": "^7.0.0",
     "sass": "^1.32.8",
     "sass-loader": "^11.0.1",
     "style-loader": "^2.0.0"
