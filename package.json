@@ -34,7 +34,7 @@
     "handlebars-webpack-plugin": "^2.2.1",
     "mini-css-extract-plugin": "^1.4.1",
     "postcss-loader": "^5.2.0",
-    "resolve-url-loader": "^3.1.2",
+    "resolve-url-loader": "^5.0.0",
     "ts-loader": "^8.1.0",
     "typescript": "^4.2.4",
     "typescript-eslint": "0.0.1-alpha.0",
